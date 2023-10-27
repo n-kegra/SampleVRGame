@@ -1,0 +1,83 @@
+buildscript {
+    repositories {
+        maven{ url'https://maven.aliyun.com/nexus/content/groups/public/'}
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.1'
+    }
+}
+
+allprojects {
+    repositories {
+        maven{ url'https://maven.aliyun.com/nexus/content/groups/public/'}
+        google()
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        def properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        def vcpkg_root = properties.getProperty("vcpkg_root")
+        def sdk_dir = properties.getProperty("sdk.dir")
+
+        applicationId "com.khronos.hello_xr"
+        minSdkVersion 26
+        targetSdkVersion 26
+        versionCode  201
+        versionName  "2.0.1"
+
+
+        shaders {
+            glslcArgs.addAll(['-c', '-g'])
+        }
+        externalNativeBuild {
+            cmake {
+                // abiFilters "armeabi-v7a","arm64-v8a"
+                abiFilters "arm64-v8a"
+                // arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=c++_static'
+                arguments "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_root}/scripts/buildsystems/vcpkg.cmake",
+                        "-DVCPKG_CHAINLOAD_TOOLCHAIN_FILE=${sdk_dir}/ndk/23.1.7779620/build/cmake/android.toolchain.cmake",
+                        "-DVCPKG_TARGET_TRIPLET=arm64-android",
+                        "-DANDROID_ABI=arm64-v8a"
+            }
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+	
+    sourceSets {
+        main {
+            java.srcDirs    = ['hello_xr/java']
+            jni.srcDirs     = ['hello_xr']
+            jniLibs.srcDirs = ['openxr_loader']
+            manifest.srcFile 'hello_xr/AndroidManifest.xml'
+        }
+    }
+	
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+            version "3.10.2"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'openxr_loader', include: ['*.jar','*.aar'])
+}
+

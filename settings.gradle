@@ -1,0 +1,2 @@
+rootProject.name='HelloXR'
+include ':hello_xr'

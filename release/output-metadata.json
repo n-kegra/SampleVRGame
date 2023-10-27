@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.khronos.hello_xr",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 201,
+      "versionName": "2.0.1",
+      "outputFile": "HelloXR-release.apk"
+    }
+  ],
+  "elementType": "File"
+}
