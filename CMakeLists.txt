@@ -30,7 +30,6 @@ add_library( # Sets the name of the library.
         ${LOCAL_SOURCE}
         ${LOCAL_HEADERS}
 		${VULKAN_SHADERS}
-        openxr_loader/include/common/gfxwrapper_opengl.c
 		)
 
 target_compile_features(hello_xr PUBLIC cxx_std_17)
