@@ -110,7 +110,7 @@ class VulkanManager : public IGraphicsManager {
         this->physicalDevice = xrInstance.getVulkanGraphicsDevice2KHR(getInfo, xr::DispatchLoaderDynamic{ xrInstance });
 
         auto prop = physicalDevice.getProperties();
-        std::cout << fmt::format("Selected Device: {} (ID:{}) Type: {}", prop.deviceName, prop.deviceID, to_string(prop.deviceType)) << std::endl;
+//        std::cout << fmt::format("Selected Device: {} (ID:{}) Type: {}", prop.deviceName, prop.deviceID, to_string(prop.deviceType)) << std::endl;
         std::cout << fmt::format("ApiVersion: {}, DriverVersion: {}", getVkVersionString(prop.apiVersion), getVkVersionString(prop.driverVersion)) << std::endl;
         std::cout << fmt::format("maxSamplerAnisotropy: {}", prop.limits.maxSamplerAnisotropy) << std::endl;
     }
